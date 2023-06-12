@@ -1,0 +1,15 @@
+{
+  "name": "html_css",
+  "packageManager": "yarn@3.3.1",
+  "dependencies": {
+    "browser-sync": "^2.27.11",
+    "sass": "^1.57.1"
+  },
+  "scripts": {
+    "server": "browser-sync start --config bs-config.js",
+    "sass": "node-sass ./ -o sites/sass_out && node-sass --watch ./ -o sites/sass_out"
+  },
+  "devDependencies": {
+    "node-sass": "^9.0.0"
+  }
+}

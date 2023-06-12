@@ -1,0 +1,113 @@
+■CSS レイアウト https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout
+
+■通常フロー　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Normal_Flow
+デフォルトでは、ブロックレベル要素のコンテンツは、その親要素の幅の 100% で、そのコンテンツと同じ高さです インライン要素は、コンテンツと同じ高さで、コンテンツと同じ幅です。インライン要素に幅や高さを設定することはできません — それらはブロックレベル要素のコンテンツの中にあるだけです。この方法でインライン要素のサイズを制御したい場合は、display: block; を使用してブロックレベル要素のようにふるまうように設定する必要があります (あるいは、display: inline-block; で、両方の特性を混在させます)。
+
+■フレックスボックス https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Flexbox
+・最初にこれやるのが分かりやすい　https://flexboxfroggy.com/#ja
+★Flex(一次元:縦or横)
+・display: flex;  親要素に指定することで配下の要素をflexitemとして扱える
+・flex-direction: column, row ⇒ flexboxの要素の方向
+・flex-wrap: wrap; 
+flex-flow: row wrap; flex-directionとflex-wrapのショートハンド
+・align-items: flex-end, center ⇒flexboxの位置
+★flex itemになるのは直下のみ
+★Flex方向について
+https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Flexbox#%E3%83%95%E3%83%AC%E3%83%83%E3%82%AF%E3%82%B9%E3%83%A2%E3%83%87%E3%83%AB
+★基本的な考え方は、flex-containerにいろいろ指定して中のアイテムを制御するイメージ
+C:\develop\WHAT_IS\what_is_htms_css\www\main\monkey999.work\flex_grid\flex_grid.css
+
+
+
+■グリッド　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Grids
+・最初にこれやるのが分かりやすいhttps://codepip.com/games/grid-garden/#ja
+★Box(二次元:縦横)
+
+※conteinerに指定
+１．グリッドを定義
+・grid-template-rows : 20% 20em 50px; ※いろんな単位もつかる
+・grid-template-columns:1fr 1fr 1fr; ※ repeat(3, 1fr);でも同じ
+・grid-template:  20% 20em 50px / 1fr 1fr 1fr ↑二つのショートハンド
+
+
+※アイテムに指定
+２．カラム方向のサイズ定義
+・grid-column-end: 1;
+・grid-column-start: 3;
+・grid-column: 1 / 3; ↑二つのショートハンド
+
+３．行方向のサイズ定義
+・grid-column-end: 1;
+・grid-column-start: 3;
+・grid-row :1 / 3;↑二つのショートハンド
+
+※grid-columnとgrid-rowのショートハンド
+grid-area:  1 / 1 / 3 / 3;
+
+
+
+■フロート(浮く)　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Floats
+・仕組み　一番最初に見るべきくそ分かりやすい⇒https://www.youtube.com/watch?v=uRdGpA2jgWw
+                                          もし消えてたら⇒"C:\develop\WHAT_IS\y2mate.com - 第18回CSSのfloatの仕組み実践プログラミング講座_480p.mp4"
+・ブロック要素でfloat指定するときはwidth設定しないといけない。（ブロックは基本的に横いっぱいに広がるため）
+・float: left; ※leftのfloatを解除
+・clear: both; ※left, right両方
+・crearfix ※こういう名前のテクニック
+　float指定した要素のafterに空のブロック追加して以降の要素のfloat回り込みを解除するやり方
+  1. floatを指定して要素を横並べ
+  .target {
+    float; left;
+  }
+  2. crearfix
+  .target::after {
+    /* crear fix */
+    content: "";
+    display: block;
+    clear: both;
+  }
+・display: flow-root
+　⇒浮動要素の親内に浮動要素を入れる（親要素のサイズをfloat指定した要素のサイズを包むようにする）
+
+■位置指定　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Positioning
+・position: relative; 元の位置に対して相対的（top,right,left,bottomで指定）
+・position: absolute;　ビューポート（基本的にbody）に対して「相対」的。直近の親要素にposition: relativeを指定すると直近の親要素に対して「相対」的
+・position: fixed; ビューポート（基本的にbody）に対して相対的。スクロールでも位置が変わらない
+・position: sticky; スクロール途中で位置固定とかできる
+　⇒これ分かりやすい　https://www.youtube.com/watch?v=JOGkW9a_HoQ
+　　こうすれば画面の一番上で止まる
+    position: sticky;
+    top 0;
+　
+
+■段組みレイアウト　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Multiple-column_Layout
+・⇒ここみるのがいいとおもう。　/monkey999.work/style_test/layout/multiple-column/layout.html
+
+
+■レスポンシブデザイン　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Responsive_Design
+★いろんな手法がある
+・フレキシブルレイアウト：javascriptでデバイスごとに読み込むCSSを変更する(古いやり方)
+・max-widthを100%にしとく
+・メディアクエリを使う
+・gridで相対的なサイズを取得する
+　⇒対象の列のサイズが 60 ピクセルで、コンテキスト（またはコンテナ）が 960 ピクセルの場合、60 を 960 で割る
+　⇒.col {
+ 　　 width: 6.25%; /* 60 / 960 = 0.0625 */
+　　}
+・段組みレイアウト、フレックスボックス、グリッドなどの最新のレイアウト方法は、デフォルトでレスポンシブ
+★レスポンシブ画像
+・htmlの<picture> 要素と <img>の srcset 属性と size 属性を使用する
+
+
+■メディアクエリーの初心者向けガイド　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Media_queries
+・@media [not] {media-type} [and ({confition})] exaple: @media screen and (max-width: 600px)
+・or条件はカンマ指定
+・notで条件が反転する
+★考え方的な
+・現在、非常に多様なサイズのデバイスが多すぎて、それを実現できません。 つまり、すべてのデザインにおいて特定のサイズを対象にするのではなく、コンテンツが何らかの方法で壊れ始める（starts to break）サイズでデザインを変更することをお勧めします。
+・アプローチのパターン
+　⇒★★★モバイルファースト レスポンシブデザイン：最小のビューから初めて、ビューポートが大きくなるにつれてレイアウトを追加
+　⇒デスクトップまたは最も広いビューから始めて、ビューポートが小さくなるにつれてレイアウトを追加
+・※注意：メディアクエリを乱用するのではなく、flexboxやgridで同様のことが実現できないか検討するのが先
+
+■過去のレイアウト方法　https://developer.mozilla.org/ja/docs/Learn/CSS/CSS_layout/Legacy_Layout_Methods
+・あとで暇があったら
