@@ -12,6 +12,12 @@ yarn server
 yarn sass
 ```
 
+## Apacheへのdeploy
+
+```
+// Todo
+```
+
 - 起動  
 <http://localhost:8000/>
 
