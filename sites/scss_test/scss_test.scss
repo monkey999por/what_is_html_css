@@ -2,177 +2,175 @@
 // 後で確認する
 
 @charset 'UTF-8';
-// @use "./scsspartial";
-// @use "./scssLibB" as B;
+@use "./scsspartial";
+@use "./scssLibB" as B;
 @use "./scssLibA" as A;
 
-// @debug A.$libval; // 10
-// @debug B.$libval; // 20
+@debug A.$libval; //10
+@debug B.$libval; // 20
 
-// @debug amptest;
-// @each $key, $val in (test: 1, a: 2, bbb: 3) {
-//   @debug $key;
-//   @debug $val;
-// }
-// $name: (
-//   key: 1,
-//   key2: d,
-// );
-// @each $key, $val in $name {
-//   @debug #{$key}_#{$val};
-// }
+@debug amptest;
+@each $key, $val in (test: 1, a: 2, bbb: 3) {
+  @debug $key;
+  @debug $val;
+}
+$name: (
+  key: 1,
+  key2: d,
+);
+@each $key, $val in $name {
+  @debug #{$key}_#{$val};
+}
 
-// //! comment 一行コメントはコンパイルされると消える。
-// /* 複数行コメントは残る */
-// $list: (1, 2, 3, 4);
-// // かっこはなくてもいい
-// $list2: 1, 2, 3, 4;
-// // 空白もOK
-// $list3: 1 2 3 4 5;
+//! comment 一行コメントはコンパイルされると消える。
+/* 複数行コメントは残る */
+$list: (1, 2, 3, 4);
+// かっこはなくてもいい
+$list2: 1, 2, 3, 4;
+// 空白もOK
+$list3: 1 2 3 4 5;
 
-// @each $item in $list3 {
-//   @debug $item;
-// }
+@each $item in $list3 {
+  @debug $item;
+}
 
-// // 二次元配列
-// // 空白とカンマを交互に使用
-// $icons: "eye" "\f112"12px, "start" "\f12e"16px, "stop" "\f12f"10px;
-// // こっちの方がわかりやすい
-// $icons2: ((1a, 2b, 3c), (4a, 5b, 6c), (7, 8, 9));
+// 二次元配列
+//空白とカンマを交互に使用
+$icons: "eye" "\f112"12px, "start" "\f12e"16px, "stop" "\f12f"10px;
+// こっちの方がわかりやすい
+$icons2: ((1a, 2b, 3c), (4a, 5b, 6c), (7, 8, 9));
 
-// @each $i in $icons2 {
-//   @each $k in $i {
-//     @debug $k;
-//   }
-// }
+@each $i in $icons2 {
+  @each $k in $i {
+    @debug $k;
+  }
+}
 
-// // throughの場合は最後のindexを含む
-// @for $i from 1 through 4 {
-//   @debug $i; // 1 ~ 4
-// }
+// throughの場合は最後のindexを含む
+@for $i from 1 through 4 {
+  @debug $i; // 1 ~ 4
+}
 
-// // toの場合は最後のindexを含まない
-// @for $i from 1 to 4 {
-//   @debug $i; // 1 ~ 3
-// }
+//  toの場合は最後のindexを含まない
+@for $i from 1 to 4 {
+  @debug $i; //1 ~ 3
+}
 
-// // 開始値 よりも 終了値 の方が小さい場合は、変数 の値は 1 つずつデクリメントされていきます。
-// @for $i from 4 to 1 {
-//   @debug dec_#{$i}; // 4 ~ 2
-// }
+//  開始値 よりも 終了値 の方が小さい場合は、変数 の値は 1 つずつデクリメントされていきます。
+@for $i from 4 to 1 {
+  @debug dec_#{$i}; //4 ~ 2
+}
 
-// //
+%extest {
+  color: rgb(1, 1, 1);
+}
+.hello {
+  background-color: black;
+  @extend %extest;
+}
+$test: 1;
+$test: "12" !default;
 
-// %extest {
-//   color: rgb(1, 1, 1);
-// }
-// .hello {
-//   background-color: black;
-//   @extend %extest;
-// }
-// $test: 1;
-// $test: "12" !default;
+@mixin media($types...) {
+  @each $type in $types {
+    @media #{$type} {
+      @content ($type);
+    }
+  }
+}
 
-// @mixin media($types...) {
-//   @each $type in $types {
-//     @media #{$type} {
-//       @content ($type);
-//     }
-//   }
-// }
+@include media(screen, print) using ($usingVal) {
+  h1 {
+    font-size: 40px;
+    @if $usingVal == print {
+      font-family: Calluna;
+    }
+  }
+}
+th {
+  margin: #{$test}px;
+  border: 1px solid #000000;
+  background-color: #808080;
+  color: #ffffff;
+  text-align: center;
+  // パーシャルファイルから変数読み込み
+  //   margin-top: scsspartial.$partial_val;
+}
+td {
+  border: 1px solid #000000;
+  text-align: center;
+  border-collapse: collapse;
+}
+ul {
+  + li {
+    list-style-type: none;
+  }
+  a {
+    color: black;
+    @debug "divider offset:a";
+  }
+}
 
-// @include media(screen, print) using ($usingVal) {
-//   h1 {
-//     font-size: 40px;
-//     @if $usingVal == print {
-//       font-family: Calluna;
-//     }
-//   }
-// }
-// th {
-//   margin: #{$test}px;
-//   border: 1px solid #000000;
-//   background-color: #808080;
-//   color: #ffffff;
-//   text-align: center;
-//   // パーシャルファイルから変数読み込み
-//   margin-top: scsspartial.$partial_val;
-// }
-// td {
-//   border: 1px solid #000000;
-//   text-align: center;
-//   border-collapse: collapse;
-// }
-// ul {
-//   + li {
-//     list-style-type: none;
-//   }
-//   a {
-//     color: black;
-//     @debug "divider offset:a";
-//   }
-// }
+$test_bal: #111;
+$test-hi: #222;
+ul + {
+  li {
+    list-style-type: none;
+    color: $test-bal;
+    border-width: 100px + 50;
+  }
+}
 
-// $test_bal: #111;
-// $test-hi: #222;
-// ul + {
-//   li {
-//     list-style-type: none;
-//     color: $test-bal;
-//     border-width: 100px + 50;
-//   }
-// }
+h2 {
+  + p {
+    border-top: 1px solid gray;
+  }
+}
+ul {
+  ~ {
+    li {
+      border-top: 1px solid gray;
+    }
+  }
+}
 
-// h2 {
-//   + p {
-//     border-top: 1px solid gray;
-//   }
-// }
-// ul {
-//   ~ {
-//     li {
-//       border-top: 1px solid gray;
-//     }
-//   }
-// }
+p {
+  ~ {
+    span {
+      opacity: 0.8;
+    }
+  }
+}
 
-// p {
-//   ~ {
-//     span {
-//       opacity: 0.8;
-//     }
-//   }
-// }
+$pc: 1024px; //PC
+$tab: 680px; //タブレット
+$sp: 480px; //スマホ
 
-// $pc: 1024px; // PC
-// $tab: 680px; // タブレット
-// $sp: 480px; // スマホ
+@mixin pc {
+  @media screen and (min-width: ($pc)) {
+    @content;
+  }
+}
+@mixin tab {
+  @media screen and (max-width: ($tab)) {
+    @content;
+  }
+}
+@mixin sp {
+  @media screen and (max-width: ($sp)) {
+    @content;
+  }
+}
 
-// @mixin pc {
-//   @media screen and (min-width: ($pc)) {
-//     @content;
-//   }
-// }
-// @mixin tab {
-//   @media screen and (max-width: ($tab)) {
-//     @content;
-//   }
-// }
-// @mixin sp {
-//   @media screen and (max-width: ($sp)) {
-//     @content;
-//   }
-// }
-
-// // responsive test
-// .scss_dummy_h1 {
-//   @include pc {
-//     color: red;
-//   }
-//   @include tab {
-//     color: greenyellow;
-//   }
-//   @include sp {
-//     color: yellow;
-//   }
-// }
+//responsive test
+.scss_dummy_h1 {
+  @include pc {
+    color: red;
+  }
+  @include tab {
+    color: greenyellow;
+  }
+  @include sp {
+    color: yellow;
+  }
+}
