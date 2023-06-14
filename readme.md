@@ -50,8 +50,8 @@ pass: htmlcss
 
 以下の手順でraspoiにnode.js,npm,yarn,Dart SASSのインストール、node.jsのサービス登録までやっている  
 <https://monkey999.notion.site/raspi-what_is_html_css-9e5403afe1c14716b975a3d03b2675a5>
-
-以下はTODO(または検証中)
-
-- node-sassをラズパイでyarn installするとエラーになるので、Dart SASSで対応中
-- Dart SASSで、あるディレクトリ配下のすべての.scssをコンパイルする方法がないか探し中。なければスクリプト書く
+※注意事項  
+- node-sassをラズパイでyarn installするとエラーになるので、Dart SASSで対応中. raspiの中で以下を実行する
+```
+. scss-to-css.sh ./sites/ ./sites/sass_out/
+```
